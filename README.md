@@ -1,19 +1,28 @@
 # Xomodoro
 
-**TODO: Add description**
+
+An Elixir escript to send Pomodoro Events to tmux sessions
+
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `xomodoro` to your list of dependencies in `mix.exs`:
+Because of the very specialed behavior of this escript it is not deployed as a hex package.
 
-```elixir
-def deps do
-  [
-    {:xomodoro, "~> 0.1.0"}
-  ]
-end
-```
+Clone or download this repro and run
+
+*  `mix escript.build`
+
+*  `mix escript.install` if you wish so
+
+
+## Usage
+
+`./xomodoro --help`
+
+
+# LICENSE
+
+Apache 2 (c.f. LICENSE)
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
