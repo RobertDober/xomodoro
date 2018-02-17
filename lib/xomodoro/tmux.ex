@@ -33,7 +33,7 @@ defmodule Xomodoro.Tmux do
 
   defp cleaned_status status do
     status
-    |> String.replace( ~r{\[\d+\]\s\z}, "" )
+    |> String.replace( ~r{\s*\[\d+\]\s*\z}, "" )
   end
 
   defp current_session do

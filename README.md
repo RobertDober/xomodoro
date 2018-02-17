@@ -17,7 +17,7 @@ Clone or download this repro and run
 
 ## Usage
 
-     xomodoro --help`
+     xomodoro --help
 
 
      xomodoro [-t|--time <minutes>] [-p|--palette <color-palette>] <session_list>
