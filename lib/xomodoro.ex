@@ -38,9 +38,29 @@ defmodule Xomodoro do
   defp aliases, do: [t: :time, h: :help]
 
   @usage """
-    xomodoro [-t|--time <minutes>] <session_list>
+    xomodoro [-t|--time <minutes>] [-p|--palette <color-palette>] <session_list>
 
-    Sends pomodoro events to all indicated sessions
+    Sends pomodoro events to all indicated sessions, or the current session if no other session is indicated
+
+    Options:
+       --time defaults to 25
+       time in minutes for the pomodoro timer to be set to initially.
+
+       --palette color palette to be used to in the events shown in the left status of the tmux sessions
+       not yet implemented yet, fixed to green on dark
+
+    Details:
+
+      The xomodoro escript shows the current pomodoro time countdown in the left status of all inidicated sessions.
+      At 5 minutes (not configurable yet), the color change and when the timer expires the color changes yet again.
+
+      After expiration the escript asks you to finish the pomodoro and reset the left status.
+
+    Caveats:
+
+      Interrupting the escript does not reset the left status (yet?). Workaround bystart again for the same sessions with
+      time th 0 and hit enter. 
+
   """
   defp usage() do
     IO.puts :stderr, @usage
