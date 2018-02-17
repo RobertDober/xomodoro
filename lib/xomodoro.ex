@@ -1,16 +1,20 @@
 defmodule Xomodoro do
 
+  use Xomodoro.Types
+
   alias Xomodoro.Runner
 
   @moduledoc """
   Sends pomodoro timer events to tmux sessions
   """
 
+  @spec main(OptionParser.argv()) :: status()
   def main(args) do
     args |> parse_args() |> interpret()
   end
 
 
+  @spec interpret( parsed_options() ) :: status()
   defp interpret( {[{:help, true}|_], _positional, []} ) do
     usage()
   end
@@ -24,17 +28,19 @@ defmodule Xomodoro do
     usage()
   end
 
-
+  @spec parse_args( OptionParser.argv() ) :: parsed_options()
   defp parse_args(args) do
     OptionParser.parse(args, strict: switches(), aliases: aliases())
   end
 
+  @spec switches() :: Keyword.t()
   defp switches,
     do: [
       time: :number,
       help: :boolean,
     ]
 
+  @spec aliases() :: Keyword.t()
   defp aliases, do: [t: :time, h: :help]
 
   @usage """
@@ -62,7 +68,9 @@ defmodule Xomodoro do
       time th 0 and hit enter. 
 
   """
+  @spec usage() :: :error
   defp usage() do
     IO.puts :stderr, @usage
+    :error
   end
 end
