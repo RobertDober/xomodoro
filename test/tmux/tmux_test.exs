@@ -11,8 +11,8 @@ defmodule Xomodoro.TmuxTest do
     Tmux.reset_session( %SessionStatus{session_name: "my_session", status_left: "before", status_left_style: "style"} )
 
     assert Mock.messages == [
-      {},
-      {}
+      {:cmd, {"tmux", ["set", "-t", "my_session", "status-left", "before"]}},
+      {:cmd, {"tmux", ["set", "-t", "my_session", "status-left-style", "style"]}}
     ]
   end
 end

@@ -20,8 +20,6 @@ defmodule Xomodoro.Tmux do
   end
 
   def reset_session session do
-    IO.inspect Mix.env
-    IO.inspect @sys_interface
     set_style(session.session_name, session.status_left_style)
     status_left(session.session_name, session.status_left)
   end
