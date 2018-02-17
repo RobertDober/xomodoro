@@ -13,6 +13,10 @@ defmodule Xomodoro.SysInterface.Mock do
     Agent.update(__MODULE__, fn _ -> [] end)
   end
 
+  def messages do
+     Agent.get(__MODULE__, &(&1))
+  end
+
   @spec sleep( number ) :: :ok
   def sleep time do
     Agent.update(__MODULE__, fn messages -> [{:sleep, time} | messages] end)

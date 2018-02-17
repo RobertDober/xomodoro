@@ -4,7 +4,6 @@ defmodule Xomodoro.Runner do
 
   @sys_interface Application.fetch_env!(:xomodoro, :sys_interface)
 
-  alias Xomodoro.SysInterace.Implemenentaion
   @moduledoc """
   Implements the system commands to be sent to all tmux sessions
   """ 
