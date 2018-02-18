@@ -18,6 +18,9 @@ defmodule Xomodoro do
   defp interpret( {[{:help, true}|_], _positional, []} ) do
     usage()
   end
+  defp interpret( {[{:palette, _}|_], _positional, []} ) do
+    IO.puts :stderr, "The palette option is not implemented yet"
+  end
   defp interpret( {kwd, positional, []} ) do
     time = Keyword.get(kwd, :time, "25")
     {time1, _} = Integer.parse( time )
@@ -36,12 +39,13 @@ defmodule Xomodoro do
   @spec switches() :: Keyword.t()
   defp switches,
     do: [
+      palette: :string,
       time: :number,
       help: :boolean,
     ]
 
   @spec aliases() :: Keyword.t()
-  defp aliases, do: [t: :time, h: :help]
+  defp aliases, do: [p: :palette, t: :time, h: :help]
 
   @usage """
     xomodoro [-t|--time <minutes>] [-p|--palette <color-palette>] <session_list>
