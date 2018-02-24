@@ -40,7 +40,8 @@ defmodule Xomodoro.Tmux do
   @spec cleaned_status( String.t() ) :: String.t()
   defp cleaned_status status do
     status
-    |> String.replace( ~r{\s*\[\d+\]\s*\z}, "" )
+    |> String.replace( ~r{\s\z}, "" )
+    |> String.replace( ~r{\s\[\d+\]\s*\z}, "" )
   end
 
   @spec current_session() :: String.t()
