@@ -40,12 +40,7 @@ Clone or download this repro and run
 
       Caveats:
 
-        Interrupting the escript does not reset the left status (yet?). Workaround bystart again for the same sessions with
-        time th 0 and hit enter.
-
-        The original text of the left status is globbered, "Session: session_name" is assumed.
-
-
+        Interrupting the escript does not reset the left status (yet?).
 
 
 # LICENSE

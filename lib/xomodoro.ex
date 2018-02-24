@@ -68,8 +68,7 @@ defmodule Xomodoro do
 
     Caveats:
 
-      Interrupting the escript does not reset the left status (yet?). Workaround bystart again for the same sessions with
-      time th 0 and hit enter. 
+      Interrupting the escript does not reset the left status (yet?).
 
   """
   @spec usage() :: :error
