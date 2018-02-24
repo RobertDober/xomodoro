@@ -1,7 +1,9 @@
 defmodule Xomodoro.Runner do
 
   use Xomodoro.Types
+
   alias Xomodoro.Tmux
+  alias Xomodoro.Options
   alias Xomodoro.Tmux.SessionStatus
 
   @sys_interface Application.fetch_env!(:xomodoro, :sys_interface)
@@ -13,14 +15,14 @@ defmodule Xomodoro.Runner do
   @doc """
   Entry point
   """
-  @spec run( OptionParser.argv(),  number() ) :: :ok
-  def run [], time do
-    with session <- Tmux.read_session_status(nil), do: _run([session], time)
+  @spec run( Options.positional_args_t(), Options.t() ) :: :ok
+  def run [], options do
+    with session <- Tmux.read_session_status(nil, options), do: _run([session], options.time)
   end
-  def run sessions, time do
+  def run sessions, options do
     sessions
-    |> Enum.map(&Tmux.read_session_status/1)
-    |> _run(time)
+    |> Enum.map(&Tmux.read_session_status(&1, options))
+    |> _run(options.time)
   end
 
   @spec _run( SessionStatus.ts(), number() ) :: :ok 

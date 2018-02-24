@@ -2,6 +2,7 @@ defmodule Xomodoro do
 
   use Xomodoro.Types
 
+  alias Xomodoro.Options
   alias Xomodoro.Runner
 
   @moduledoc """
@@ -10,42 +11,36 @@ defmodule Xomodoro do
 
   @spec main(OptionParser.argv()) :: status()
   def main(args) do
-    args |> parse_args() |> interpret()
+    args
+    |> Options.parse()
+    |> interpret()
   end
 
 
-  @spec interpret( parsed_options() ) :: status()
-  defp interpret( {[{:help, true}|_], _positional, []} ) do
+  @spec interpret(Options.result_t()) :: status()
+  defp interpret( {:error, reason} ) do
+    IO.puts :stderr, reason
     usage()
   end
-  defp interpret( {[{:palette, _}|_], _positional, []} ) do
-    IO.puts :stderr, "The palette option is not implemented yet"
+  defp interpret( {:ok, {options, positionals}} ) do
+     interpret_ok(options, positionals)
   end
-  defp interpret( {kwd, positional, []} ) do
-    time = Keyword.get(kwd, :time, "25")
-    {time1, _} = Integer.parse( time )
-    Runner.run( positional, time1 )
+
+  @spec interpret_ok( Options.t, Options.positional_args_t() ) :: :ok
+  defp interpret_ok( %{help: true}, _ ) do
+    usage()
+    :ok
+  end
+  defp interpret_ok( %{version: true}, _ ) do
+    with {:ok, version} = :application.get_key(:xomodoro, :vsn) do
+      IO.puts version
+      :ok
+    end
+  end
+  defp interpret_ok( options, session_names ) do
+    Runner.run( session_names, options )
   end 
-  defp interpret( {_kwds, _positional, errors} ) do
-    IO.puts :stderr, "Illegal options #{inspect errors}"
-    usage()
-  end
 
-  @spec parse_args( OptionParser.argv() ) :: parsed_options()
-  defp parse_args(args) do
-    OptionParser.parse(args, strict: switches(), aliases: aliases())
-  end
-
-  @spec switches() :: Keyword.t()
-  defp switches,
-    do: [
-      palette: :string,
-      time: :number,
-      help: :boolean,
-    ]
-
-  @spec aliases() :: Keyword.t()
-  defp aliases, do: [p: :palette, t: :time, h: :help]
 
   @usage """
     xomodoro [-t|--time <minutes>] [-p|--palette <color-palette>] <session_list>

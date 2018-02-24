@@ -1,6 +1,7 @@
 defmodule Xomodoro.Tmux do
   use Xomodoro.Types
 
+  alias Xomodoro.Options
   alias Xomodoro.Tmux.SessionStatus
 
 
@@ -13,15 +14,16 @@ defmodule Xomodoro.Tmux do
     status_left(session.session_name, ~s{#{cleaned_status session.status_left} [#{time}] })
   end
 
-  @spec read_session_status( maybe(String.t()) ) :: SessionStatus.t()
-  def read_session_status nil do
-    current_session() |> read_session_status()
+  @spec read_session_status( maybe(String.t()), Options.t() ) :: SessionStatus.t()
+  def read_session_status nil, options do
+    current_session() |> read_session_status(options)
   end
 
-  def read_session_status session do
+  def read_session_status session, options do
     %SessionStatus{session_name: session,
                    status_left:  read_status_left(session),
-                   status_left_style: read_status_left_style(session)}
+                   status_left_style: read_status_left_style(session),
+                   options: options}
   end
 
   @spec reset_session( SessionStatus.t() ) :: String.t()
