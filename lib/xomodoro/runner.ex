@@ -17,7 +17,8 @@ defmodule Xomodoro.Runner do
   """
   @spec run( Options.positional_args_t(), Options.t() ) :: :ok
   def run [], options do
-    with session <- Tmux.read_session_status(nil, options), do: _run([session], options.time)
+    with {time, _} <- Integer.parse(options.time), do:
+      with session <- Tmux.read_session_status(nil, options), do: _run([session], time)
   end
   def run sessions, options do
     with {time, _} <- Integer.parse(options.time) do
