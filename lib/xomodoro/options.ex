@@ -6,7 +6,7 @@ defmodule Xomodoro.Options do
     help: false,
     palette: "default",
     silent: false,
-    time: 25,
+    time: "25",
     verbose: false,
     version: false
 

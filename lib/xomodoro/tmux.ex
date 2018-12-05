@@ -51,6 +51,13 @@ defmodule Xomodoro.Tmux do
     tmux(["list-panes", "-F", "\#{session_name}"]) |> String.trim()
   end
 
+  defp default_status status, session do
+    if String.trim(status) == "" do
+      "Session: #{session}"
+    else
+      status
+    end
+  end
   @spec get_style( number() ) :: pair( String.t() )
   defp get_style time do
     case time do
@@ -72,6 +79,7 @@ defmodule Xomodoro.Tmux do
   @spec read_status_left( String.t() ) :: String.t()
   def read_status_left session do
     tmux_show_option(session, "status-left")
+    |> default_status(session)
   end
 
   @spec read_status_left_style( String.t() ) :: String.t()

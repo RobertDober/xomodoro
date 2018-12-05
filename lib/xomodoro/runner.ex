@@ -20,9 +20,11 @@ defmodule Xomodoro.Runner do
     with session <- Tmux.read_session_status(nil, options), do: _run([session], options.time)
   end
   def run sessions, options do
-    sessions
-    |> Enum.map(&Tmux.read_session_status(&1, options))
-    |> _run(options.time)
+    with {time, _} <- Integer.parse(options.time) do
+      sessions
+      |> Enum.map(&Tmux.read_session_status(&1, options))
+      |> _run(time)
+    end
   end
 
   @spec _run( SessionStatus.ts(), number() ) :: :ok 
